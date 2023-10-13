@@ -1,3 +1,7 @@
 .task {
   border: none;
 }
+
+.task:disabled {
+  color: black;
+}

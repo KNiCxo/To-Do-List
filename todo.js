@@ -60,49 +60,60 @@ function createEventListenters(taskID) {
 
   // Edits/Saves task when clicked
   document.querySelector(`.edit${taskID}`).addEventListener('click', () => {
-    // Gets correct "Edit" button and task input element
-    const editBtn = document.querySelector(`.edit${taskID}`);
-    const task = document.querySelector(`.task${taskID}`);
-
-    // If button says "Edit", disable input field, change to "Save", enable task input editing, and select all task text
-    // Else, enable input field, change to "Edit", and disable task input editing
-    if (editBtn.innerHTML == 'Edit') {
-      isEditing = true;
-      inputField.disabled = true;
-      editBtn.innerHTML = 'Save';
-      task.disabled = false;
-      task.select();
-    } else {
-      isEditing = false;
-      inputField.disabled = false;
-      editBtn.innerHTML = 'Edit';
-      task.disabled = true;
-    }
+    editTask(taskID);
   });
 
   // Saves task input when "Enter" is pressed
   document.querySelector(`.task${taskID}`).addEventListener('keypress', (event) => {
     if (event.key == 'Enter') {
-      const editBtn = document.querySelector(`.edit${taskID}`);
-      const task = document.querySelector(`.task${taskID}`);
-
-      isEditing = false;
-      inputField.disabled = false;
-      editBtn.innerHTML = 'Edit';
-      task.disabled = true;
+      editTask(taskID);
     }
   });
 
   // Deletes task element when clicked
   document.querySelector(`.delete${taskID}`).addEventListener('click', () => {
-      const taskElement = document.querySelector(`.taskElement${taskID}`);
-      taskElement.remove();
+    deleteTask(taskID);
   });
+
 }
 
+// Shows or hides "Edit" and "Delete" buttons depending on event type
 function hover(event, isEditing, taskID) {
   if (!isEditing) {
     document.querySelector(`.edit${taskID}`).style.visibility = (event.type === 'mouseover') ? 'visible' : 'hidden';
     document.querySelector(`.delete${taskID}`).style.visibility = (event.type === 'mouseover') ? 'visible' : 'hidden';
   }
+}
+
+// Function to edit or save a task
+function editTask(taskID) {
+  // Gets correct "Edit" button and task input element
+  const editBtn = document.querySelector(`.edit${taskID}`);
+  const task = document.querySelector(`.task${taskID}`);
+
+  // If button says "Edit", disable input field, change to "Save", enable task input editing, and select all task text
+  // Else, enable input field, change to "Edit", and disable task input editing
+  if (editBtn.innerHTML == 'Edit') {
+    isEditing = true;
+    inputField.disabled = true;
+    editBtn.innerHTML = 'Save';
+    task.disabled = false;
+    task.select();
+  } else {
+    // This prevents highlight from remaining after saving (Couldn't find a better solution)
+    const temp = task.value;
+    task.value = '';
+    task.value = temp;
+
+    isEditing = false;
+    inputField.disabled = false;
+    editBtn.innerHTML = 'Edit';
+    task.disabled = true;
+  }
+}
+
+// Function to delete a task element
+function deleteTask(taskID) {
+  const taskElement = document.querySelector(`.taskElement${taskID}`);
+  taskElement.remove();
 }

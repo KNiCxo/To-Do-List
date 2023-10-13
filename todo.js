@@ -6,6 +6,9 @@ const taskUL = document.querySelector('.tasks');
 // Tracks total tasks that have been created
 let totalTasks = 0;
 
+// Flag to track if a task input element is being edited
+let isEditing = false;
+
 // Adds task to list from input field if "Add" button is clicked or "Enter" key is pressed
 addBtn.addEventListener('click', addTask);
 inputField.addEventListener('keypress', (event) => {
@@ -37,14 +40,23 @@ function addTask() {
    <button class="edit${totalTasks}">Edit</button>
    <button class="delete${totalTasks}">Delete</button>`;
 
-  // Appends to end of Task UL, creates event listeners for task element and clears input field
+  // Appends to end of Task UL, hides "Edit" and "Delete" buttons, creates event listeners for task element, and clears input field
   taskUL.append(taskElement);
+  document.querySelector(`.edit${taskElement.dataset.taskId}`).style.visibility = 'hidden';
+  document.querySelector(`.delete${taskElement.dataset.taskId}`).style.visibility = 'hidden';
   createEventListenters(taskElement.dataset.taskId);
   inputField.value = '';
 }
 
-// Creates event listeners for task input element and for "Edit" and "Delete" buttons
+// Creates event listeners for task "li" element, task input element and for "Edit" and "Delete" buttons
 function createEventListenters(taskID) {
+  document.querySelector(`.taskElement${taskID}`).addEventListener('mouseover', (event) => {
+    hover(event, isEditing, taskID);
+  });
+
+  document.querySelector(`.taskElement${taskID}`).addEventListener('mouseout', (event) => {
+    hover(event, isEditing, taskID);
+  });
 
   // Edits/Saves task when clicked
   document.querySelector(`.edit${taskID}`).addEventListener('click', () => {
@@ -55,11 +67,13 @@ function createEventListenters(taskID) {
     // If button says "Edit", disable input field, change to "Save", enable task input editing, and select all task text
     // Else, enable input field, change to "Edit", and disable task input editing
     if (editBtn.innerHTML == 'Edit') {
+      isEditing = true;
       inputField.disabled = true;
       editBtn.innerHTML = 'Save';
       task.disabled = false;
       task.select();
     } else {
+      isEditing = false;
       inputField.disabled = false;
       editBtn.innerHTML = 'Edit';
       task.disabled = true;
@@ -72,6 +86,7 @@ function createEventListenters(taskID) {
       const editBtn = document.querySelector(`.edit${taskID}`);
       const task = document.querySelector(`.task${taskID}`);
 
+      isEditing = false;
       inputField.disabled = false;
       editBtn.innerHTML = 'Edit';
       task.disabled = true;
@@ -83,4 +98,11 @@ function createEventListenters(taskID) {
       const taskElement = document.querySelector(`.taskElement${taskID}`);
       taskElement.remove();
   });
+}
+
+function hover(event, isEditing, taskID) {
+  if (!isEditing) {
+    document.querySelector(`.edit${taskID}`).style.visibility = (event.type === 'mouseover') ? 'visible' : 'hidden';
+    document.querySelector(`.delete${taskID}`).style.visibility = (event.type === 'mouseover') ? 'visible' : 'hidden';
+  }
 }

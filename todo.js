@@ -60,4 +60,9 @@ function createEventListenters(taskID) {
       task.disabled = true;
     }
   });
+
+  document.querySelector(`.delete${taskID}`).addEventListener('click', () => {
+      const taskElement = document.querySelector(`.taskElement${taskID}`);
+      taskElement.remove();
+  });
 }

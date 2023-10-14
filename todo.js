@@ -9,7 +9,7 @@ if (!totalTasks) {
   totalTasks = 0;
 }
 
-// Stores tasks in an array to be saved on page reload
+// Stores tasks in an array to be saved
 let taskArr = JSON.parse(localStorage.getItem('taskArr'));
 if (!taskArr) {
   taskArr = [];
@@ -26,6 +26,8 @@ inputField.addEventListener('keypress', (event) => {
   }
 });
 
+// Draws saved tasks on to the screen
+drawTasks();
 
 // *** TEMP CODE: DELETE LATER!!!! *** \\
 /*
@@ -36,6 +38,29 @@ localStorage.setItem('totalTasks', JSON.stringify(totalTasks));*/
 taskArr.forEach((index) => {
   console.log(index);
 });
+
+// Displays all tasks stored in array on to the screen
+function drawTasks() {
+  taskArr.forEach((task) => {
+    // Creates "li" element with a unique class name and taskID
+    const taskElement = document.createElement('li');
+    taskElement.className = `taskElement${task.taskID}`;
+    taskElement.dataset.taskId = task.taskID;
+
+    // "li" contains checkbox, input element for task, and an "Edit" and "Delete" button all with unique class names
+    taskElement.innerHTML = 
+    `<input class="checkbox${task.taskID}" type="checkbox"> 
+    <input class="task task${task.taskID}" type="text" value="${task.taskText}" disabled="true">
+    <button class="edit${task.taskID}">Edit</button>
+    <button class="delete${task.taskID}">Delete</button>`;
+    
+    // Appends to end of Task UL, hides "Edit" and "Delete" buttons, and creates event listeners for task element
+    taskUL.append(taskElement);
+    document.querySelector(`.edit${taskElement.dataset.taskId}`).style.visibility = 'hidden';
+    document.querySelector(`.delete${taskElement.dataset.taskId}`).style.visibility = 'hidden';
+    createEventListenters(taskElement.dataset.taskId);
+  })
+}
 
 // Adds task to list
 function addTask() {

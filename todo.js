@@ -110,12 +110,19 @@ function addTask() {
 
 // Creates event listeners for task "li" element, task input element and for "Edit" and "Delete" buttons
 function createEventListenters(taskID) {
+  // Displays "Edit" and "Delete" buttons if element is hovered over
   document.querySelector(`.taskElement${taskID}`).addEventListener('mouseover', (event) => {
     hover(event, isEditing, taskID);
   });
 
+  // Hides "Edit" and "Delete" buttons if element is not hovered over
   document.querySelector(`.taskElement${taskID}`).addEventListener('mouseout', (event) => {
     hover(event, isEditing, taskID);
+  });
+
+  // Marks task as complete or incomplete when clicked
+  document.querySelector(`.checkbox${taskID}`).addEventListener('click', () => {
+    completeTask(taskID);
   });
 
   // Edits/Saves task when clicked
@@ -142,6 +149,18 @@ function hover(event, isEditing, taskID) {
   if (!isEditing) {
     document.querySelector(`.edit${taskID}`).style.visibility = (event.type === 'mouseover') ? 'visible' : 'hidden';
     document.querySelector(`.delete${taskID}`).style.visibility = (event.type === 'mouseover') ? 'visible' : 'hidden';
+  }
+}
+
+// Greys out task and crosses it out
+function completeTask(taskID) {
+  const checkbox = document.querySelector(`.checkbox${taskID}`);
+  const task = document.querySelector(`.task${taskID}`);
+
+  if (checkbox.checked) {
+    task.classList.add('taskComplete');
+  } else {
+    task.classList.remove('taskComplete');
   }
 }
 

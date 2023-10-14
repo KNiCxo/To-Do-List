@@ -5,3 +5,8 @@
 .task:disabled {
   color: black;
 }
+
+.taskComplete:disabled {
+  text-decoration: line-through;
+  color: grey;
+}

@@ -4,7 +4,16 @@ const addBtn = document.getElementById('addTask');
 const taskUL = document.querySelector('.tasks');
 
 // Tracks total tasks that have been created
-let totalTasks = 0;
+let totalTasks = JSON.parse(localStorage.getItem('totalTasks'));
+if (!totalTasks) {
+  totalTasks = 0;
+}
+
+// Stores tasks in an array to be saved on page reload
+let taskArr = JSON.parse(localStorage.getItem('taskArr'));
+if (!taskArr) {
+  taskArr = [];
+}
 
 // Flag to track if a task input element is being edited
 let isEditing = false;
@@ -17,6 +26,17 @@ inputField.addEventListener('keypress', (event) => {
   }
 });
 
+
+// *** TEMP CODE: DELETE LATER!!!! *** \\
+/*
+taskArr = [];
+localStorage.setItem('taskArr', JSON.stringify(taskArr));
+totalTasks = 0;
+localStorage.setItem('totalTasks', JSON.stringify(totalTasks));*/
+taskArr.forEach((index) => {
+  console.log(index);
+});
+
 // Adds task to list
 function addTask() {
   // If input field is empty, there is no task to be added
@@ -26,6 +46,7 @@ function addTask() {
 
   // Increase task count and store input as a string
   totalTasks++;
+  localStorage.setItem('totalTasks', JSON.stringify(totalTasks));
   const task = inputField.value;
 
   // Creates "li" element with a unique class name and taskID
@@ -46,6 +67,20 @@ function addTask() {
   document.querySelector(`.delete${taskElement.dataset.taskId}`).style.visibility = 'hidden';
   createEventListenters(taskElement.dataset.taskId);
   inputField.value = '';
+
+  // Pushes task and taskID into array
+  const taskText = task;
+  const taskID = totalTasks;
+  taskArr.push({
+    taskText,
+    taskID
+  });
+  localStorage.setItem('taskArr', JSON.stringify(taskArr));
+
+  // *** TEMP CODE: DELETE LATER!!!! *** \\
+  taskArr.forEach((index) => {
+    console.log(index);
+  });
 }
 
 // Creates event listeners for task "li" element, task input element and for "Edit" and "Delete" buttons
@@ -105,6 +140,19 @@ function editTask(taskID) {
     task.value = '';
     task.value = temp;
 
+    // Make changes to task in array
+    taskArr.forEach((index) => {
+      if (index.taskID == taskID) {
+        index.taskText = task.value
+      }
+    });
+    localStorage.setItem('taskArr', JSON.stringify(taskArr));
+
+    // *** TEMP CODE: DELETE LATER!!!! *** \\
+    taskArr.forEach((index) => {
+      console.log(index);
+    });
+
     isEditing = false;
     inputField.disabled = false;
     editBtn.innerHTML = 'Edit';
@@ -116,4 +164,11 @@ function editTask(taskID) {
 function deleteTask(taskID) {
   const taskElement = document.querySelector(`.taskElement${taskID}`);
   taskElement.remove();
+
+  for (let i = 0; i < taskArr.length; i++) {
+    if (taskArr[i].taskID == taskID) {
+      taskArr.splice(i, 1);
+    }
+  }
+  localStorage.setItem('taskArr', JSON.stringify(taskArr));
 }

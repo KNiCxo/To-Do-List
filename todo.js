@@ -49,10 +49,10 @@ function drawTasks() {
 
     // "li" contains checkbox, input element for task, and an "Edit" and "Delete" button all with unique class names
     taskElement.innerHTML = 
-    `<input class="checkbox${task.taskID}" type="checkbox"> 
+    `<input class="checkbox checkbox${task.taskID}" type="checkbox"> 
     <input class="task task${task.taskID}" type="text" value="${task.taskText}" disabled="true">
-    <button class="edit${task.taskID}">Edit</button>
-    <button class="delete${task.taskID}">Delete</button>`;
+    <button class="edit edit${task.taskID}">Edit</button>
+    <button class="delete delete${task.taskID}">Delete</button>`;
     
     // Appends to end of Task UL, hides "Edit" and "Delete" buttons, and creates event listeners for task element
     taskUL.append(taskElement);
@@ -81,10 +81,10 @@ function addTask() {
 
   // "li" contains checkbox, input element for task, and an "Edit" and "Delete" button all with unique class names
   taskElement.innerHTML = 
-  `<input class="checkbox${totalTasks}" type="checkbox"> 
+  `<input class="checkbox checkbox${totalTasks}" type="checkbox"> 
    <input class="task task${totalTasks}" type="text" value="${task}" disabled="true">
-   <button class="edit${totalTasks}">Edit</button>
-   <button class="delete${totalTasks}">Delete</button>`;
+   <button class="edit edit${totalTasks}">Edit</button>
+   <button class="delete delete${totalTasks}">Delete</button>`;
 
   // Appends to end of Task UL, hides "Edit" and "Delete" buttons, creates event listeners for task element, and clears input field
   taskUL.append(taskElement);

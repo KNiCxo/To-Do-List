@@ -115,7 +115,7 @@ input[type="checkbox"]:checked{
   color: rgb(212, 193, 193);
 }
 
-/* Styling for "Edit and Delete" buttons
+/* Styling for "Edit and Delete" buttons */
 .edit, .delete {
   width: 50px;
   height: 25px;
@@ -136,4 +136,8 @@ input[type="checkbox"]:checked{
 /* Styling for "Delete" button when hovered */
 .delete:hover {
   background-color: rgb(183, 51, 11);
+}
+
+@media only screen and (min-width: 412px) {
+
 }

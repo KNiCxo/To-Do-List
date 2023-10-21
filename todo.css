@@ -82,6 +82,7 @@ input[type="checkbox"] {
   border-radius: 5px;
 }
 
+/* Styling for checkbox hover */
 input[type="checkbox"]:hover {
   border: 2px solid rgb(9, 180, 9);
 }
@@ -128,16 +129,77 @@ input[type="checkbox"]:checked{
   cursor: pointer;
 }
 
-/* Styling for "Edit" button when hovered */
-.edit:hover {
-  background-color: rgb(15, 149, 15);
+/* Styling for "Edit" and "Delete" buttons when hovered */
+.edit:hover, .delete:hover {
+  background-color:rgb(72, 69, 69);
 }
 
-/* Styling for "Delete" button when hovered */
-.delete:hover {
-  background-color: rgb(183, 51, 11);
-}
 
+/* Styling for different widths */
 @media only screen and (min-width: 412px) {
+  /* Styling for task input element */
+  .task {
+    width: 225px;
+  }
 
+  /* Styling for "Edit and Delete" buttons */
+  .edit, .delete {
+    width: 55px;
+    font-size: 15px;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  /* Styling for h1 */
+  h1 {
+    font-size: 85px;
+  }
+
+  /* Styling for user input field */
+  #inputField {
+    width: 400px;
+    height: 55px;
+    font-size: 28px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+
+  /* Styling for list element */
+  ul {
+    margin-left: -50px;
+  }
+
+  /* Styling for "unchecked" checkbox */
+  input[type="checkbox"] {
+    top: 8px;
+    width: 35px;
+    height: 35px;
+  }
+
+  /* Styling for "checked" checkbox */
+  input[type="checkbox"]:checked{
+    background-size: 30px;
+  }
+
+  /* Styling for task input element */
+  .task {
+    width: 400px;
+    height: 35px;
+    margin-bottom: 35px;
+    font-size: 32px;
+  }
+
+  /* Styling for "Edit and Delete" buttons */
+  .edit, .delete {
+    width: 100px;
+    height: 40px;
+    font-size: 24px;
+  }
+
+  /* Styling for submit button */
+  #addTask {
+    width: 120px;
+    height: 45px;
+    font-size: 23px;
+  }
 }

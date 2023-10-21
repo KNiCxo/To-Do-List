@@ -29,16 +29,6 @@ inputField.addEventListener('keypress', (event) => {
 // Draws saved tasks on to the screen
 drawTasks();
 
-// *** TEMP CODE: DELETE LATER!!!! *** \\
-/*
-taskArr = [];
-localStorage.setItem('taskArr', JSON.stringify(taskArr));
-totalTasks = 0;
-localStorage.setItem('totalTasks', JSON.stringify(totalTasks));*/
-taskArr.forEach((index) => {
-  console.log(index);
-});
-
 // Displays all tasks stored in array on to the screen
 function drawTasks() {
   taskArr.forEach((task) => {
@@ -109,11 +99,6 @@ function addTask() {
     taskCompleted
   });
   localStorage.setItem('taskArr', JSON.stringify(taskArr));
-
-  // *** TEMP CODE: DELETE LATER!!!! *** \\
-  taskArr.forEach((index) => {
-    console.log(index);
-  });
 }
 
 // Creates event listeners for task "li" element, task input element and for "Edit" and "Delete" buttons
@@ -178,11 +163,6 @@ function completeTask(taskID) {
     }
   });
   localStorage.setItem('taskArr', JSON.stringify(taskArr));
-
-  // *** TEMP CODE: DELETE LATER!!!! *** \\
-  taskArr.forEach((index) => {
-    console.log(index);
-  });
 }
 
 // Function to edit or save a task
@@ -212,11 +192,6 @@ function editTask(taskID) {
       }
     });
     localStorage.setItem('taskArr', JSON.stringify(taskArr));
-
-    // *** TEMP CODE: DELETE LATER!!!! *** \\
-    taskArr.forEach((index) => {
-      console.log(index);
-    });
 
     isEditing = false;
     inputField.disabled = false;

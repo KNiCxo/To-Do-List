@@ -50,15 +50,21 @@ function drawTasks() {
     // "li" contains checkbox, input element for task, and an "Edit" and "Delete" button all with unique class names
     taskElement.innerHTML = 
     `<input class="checkbox checkbox${task.taskID}" type="checkbox"> 
-    <input class="task task${task.taskID}" type="text" value="${task.taskText}" disabled="true">
-    <button class="edit edit${task.taskID}">Edit</button>
-    <button class="delete delete${task.taskID}">Delete</button>`;
+     <input class="task task${task.taskID}" type="text" value="${task.taskText}" disabled="true">
+     <button class="edit edit${task.taskID}">Edit</button>
+     <button class="delete delete${task.taskID}">Delete</button>`;
     
     // Appends to end of Task UL, hides "Edit" and "Delete" buttons, and creates event listeners for task element
     taskUL.append(taskElement);
     document.querySelector(`.edit${taskElement.dataset.taskId}`).style.visibility = 'hidden';
     document.querySelector(`.delete${taskElement.dataset.taskId}`).style.visibility = 'hidden';
     createEventListenters(taskElement.dataset.taskId);
+
+    // Marks task as completed if necessary
+    if (task.taskCompleted) {
+      document.querySelector(`.checkbox${task.taskID}`).checked = true;
+      document.querySelector(`.task${task.taskID}`).classList.add('taskComplete');
+    }
   })
 }
 
@@ -96,9 +102,11 @@ function addTask() {
   // Pushes task and taskID into array
   const taskText = task;
   const taskID = totalTasks;
+  const taskCompleted = false;
   taskArr.push({
     taskText,
-    taskID
+    taskID,
+    taskCompleted
   });
   localStorage.setItem('taskArr', JSON.stringify(taskArr));
 
@@ -162,6 +170,19 @@ function completeTask(taskID) {
   } else {
     task.classList.remove('taskComplete');
   }
+
+  // Make changes to task in array
+  taskArr.forEach((index) => {
+    if (index.taskID == taskID) {
+      index.taskCompleted = checkbox.checked;
+    }
+  });
+  localStorage.setItem('taskArr', JSON.stringify(taskArr));
+
+  // *** TEMP CODE: DELETE LATER!!!! *** \\
+  taskArr.forEach((index) => {
+    console.log(index);
+  });
 }
 
 // Function to edit or save a task
